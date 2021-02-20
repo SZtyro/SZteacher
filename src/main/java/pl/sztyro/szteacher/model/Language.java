@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.Pattern;
 
+import org.hibernate.validator.*;
+
 @Entity
 public class Language {
 
@@ -14,8 +16,8 @@ public class Language {
     long id;
 
     @Column(nullable = false, unique = true)
-    @Pattern(regexp = ".*[a-z][a-z]_[A-Z][A-Z]")
-    String lang;
+    @Pattern(regexp = ".*([a-z][a-z]_[A-Z][A-Z]$)", message = "Wrong language!.")
+    private String lang;
 
     public Language(String code) {
         this.lang = code;

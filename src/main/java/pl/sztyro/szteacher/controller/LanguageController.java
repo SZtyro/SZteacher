@@ -9,7 +9,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pl.sztyro.szteacher.config.HibernateUtil;
+import pl.sztyro.szteacher.model.Language;
 import pl.sztyro.szteacher.service.LanguageService;
+
+import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("api/language")
@@ -24,20 +28,17 @@ public class LanguageController {
     HibernateUtil hibernateUtill;
 
     @PostMapping()
-    public void addLanguage(@RequestBody() Object body) {
+    public void addLanguage(@RequestBody() @Valid Language body) {
 
-        JSONObject jsonObject = new JSONObject(new Gson().toJson(body));
-        String code = jsonObject.getString("code");
+        languageService.addLanguage(body.getLang());
+        _logger.info("Added new language: " + body.getLang());
 
-        Session session = hibernateUtill.getSession();
-
-
-        languageService.addLanguage(code);
-        _logger.info(code);
+    }
 
 
-        session.close();
-
+    @GetMapping()
+    public List<Language> getAllLanguages(){
+        return languageService.getLanguges();
     }
 
 }
