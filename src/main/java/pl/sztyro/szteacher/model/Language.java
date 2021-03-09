@@ -34,4 +34,8 @@ public class Language {
     public void setLang(String lang) {
         this.lang = lang;
     }
+
+    public long getId() {
+        return id;
+    }
 }

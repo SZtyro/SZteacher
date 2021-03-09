@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import pl.sztyro.szteacher.service.LanguageService;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 public class Word {
@@ -25,6 +26,7 @@ public class Word {
     Language translationLanguage;
 
     @Column(nullable = false)
+    @NotBlank
     String translation;
 
     public Word() {
@@ -67,6 +69,10 @@ public class Word {
 
     public void setTranslation(String translation) {
         this.translation = translation;
+    }
+
+    public long getId() {
+        return id;
     }
 
     @Override
