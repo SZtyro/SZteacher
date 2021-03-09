@@ -1,0 +1,80 @@
+<div class="container-fluid row m-0" style="height: 100vh; justify-content: space-between">
+  <span class="p-0">
+    <span class="col-12 col-md-6">
+
+
+        <mat-form-field appearance="outline" style="width: 100%">
+          <mat-label translate>word</mat-label>
+          <input matInput [(ngModel)]="word" (keyup)="search($event)">
+        </mat-form-field>
+
+
+      <div *ngFor="let word of words" (click)="setWord(word)" class="translation">
+        <h5 style="margin: 0px">{{word['original']}}</h5>
+        <span>
+          <img [src]="'https://www.countryflags.io/'+ word['language'].lang.split('_')[1]+'/flat/16.png'">
+        </span>
+      </div>
+    </span>
+
+    <span class="col-12 col-md-6 row m-0 p-0">
+
+      <mat-form-field appearance="outline" class="col-12 col-md-6 m-0 p-0">
+      <mat-label translate>language</mat-label>
+      <mat-select [(ngModel)]="languageId">
+        <mat-option *ngFor="let language of languages" [value]="language.id" class="flag">
+          {{language.lang | translate}}
+          <span>
+            <img [src]="'https://www.countryflags.io/'+ language.lang.split('_')[1]+'/flat/16.png'">
+          </span>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+
+
+
+    <mat-form-field appearance="outline" class="col-12 col-md-6 m-0 p-0">
+      <mat-label translate>language</mat-label>
+      <mat-select [(ngModel)]="translationLanguageId">
+        <mat-option *ngFor="let language of languages" [value]="language.id" class="flag">
+          {{language.lang | translate}}
+          <span>
+            <img [src]="'https://www.countryflags.io/'+ language.lang.split('_')[1]+'/flat/16.png'">
+          </span>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+
+    <span>
+      <div>
+          <mat-form-field appearance="outline" style="width: 100%" class="form-field-with-button m-0 p-0">
+            <mat-label translate>translation</mat-label>
+            <div style="display: flex">
+              <input matInput [(ngModel)]="translation">
+            <button style="float:right" mat-button (click)="addTranslation()" translate><mat-icon>add</mat-icon></button>
+            </div>
+          </mat-form-field>
+      </div>
+
+
+      <div *ngFor="let translation of translations" class="translation">
+        <h5 style="margin: 0px">{{translation}}</h5>
+        <button mat-button color="primary" (click)="deleteTranslation(translation)">
+          <mat-icon>
+            clear
+          </mat-icon>
+        </button>
+      </div>
+    </span>
+    </span>
+  </span>
+
+  <span class="bottom-buttons">
+      <button class="col-12 col-sm-6 col-md-3" style="height: 45px; " mat-raised-button color="primary"
+              (click)="save()" translate>save</button>
+  </span>
+</div>
+
+
