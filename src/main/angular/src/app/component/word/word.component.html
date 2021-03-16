@@ -1,25 +1,27 @@
 <div class="container-fluid row m-0" style="height: 100vh; justify-content: space-between">
   <span class="p-0">
-    <span class="col-12 col-md-6">
+    <span class="col-12 col-md-6 row m-0 p-0" style="width: 100%;">
 
 
-        <mat-form-field appearance="outline" style="width: 100%">
+      <mat-form-field appearance="outline">
           <mat-label translate>word</mat-label>
           <input matInput [(ngModel)]="word" (keyup)="search($event)">
-        </mat-form-field>
+      </mat-form-field>
 
-
-      <div *ngFor="let word of words" (click)="setWord(word)" class="translation">
+      <span>
+        <span *ngFor="let word of words" (click)="setWord(word)" class="translation">
         <h5 style="margin: 0px">{{word['original']}}</h5>
         <span>
           <img [src]="'https://www.countryflags.io/'+ word['language'].lang.split('_')[1]+'/flat/16.png'">
         </span>
-      </div>
+      </span>
+      </span>
+
     </span>
 
-    <span class="col-12 col-md-6 row m-0 p-0">
+    <span class="col-12 col-md-6 row m-0 p-0" style="width: 100%;">
 
-      <mat-form-field appearance="outline" class="col-12 col-md-6 m-0 p-0">
+      <mat-form-field appearance="outline" class="col-12 col-md-6">
       <mat-label translate>language</mat-label>
       <mat-select [(ngModel)]="languageId">
         <mat-option *ngFor="let language of languages" [value]="language.id" class="flag">
@@ -29,12 +31,12 @@
           </span>
         </mat-option>
       </mat-select>
-    </mat-form-field>
+      </mat-form-field>
 
 
 
 
-    <mat-form-field appearance="outline" class="col-12 col-md-6 m-0 p-0">
+    <mat-form-field appearance="outline" class="col-12 col-md-6">
       <mat-label translate>language</mat-label>
       <mat-select [(ngModel)]="translationLanguageId">
         <mat-option *ngFor="let language of languages" [value]="language.id" class="flag">
