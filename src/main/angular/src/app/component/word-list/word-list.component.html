@@ -1,0 +1,37 @@
+<div class="container-fluid row m-0" style="height: 100vh; justify-content: space-between">
+
+  <span class="container">
+
+    <mat-form-field appearance="outline" class="col-12 col-md-6 p-2">
+        <mat-label translate>name</mat-label>
+        <input matInput [ngModel]="list?.name" (ngModelChange)="list.name=$event" required>
+    </mat-form-field>
+
+
+    <mat-checkbox class="col-12 col-md-6 mat-form-field-wrapper p-2" [ngModel]="list?.private"
+                  (ngModelChange)="list.private=$event">private</mat-checkbox>
+
+
+    <mat-form-field appearance="outline" class="col-12 col-md-6 p-2">
+      <mat-label translate>language</mat-label>
+      <mat-select [ngModel]="list?.language?.id" (ngModelChange)="selectLanguage($event)" required>
+        <mat-option *ngFor="let language of languages" [value]="language.id" class="flag">
+          {{language.lang | translate}}
+          <span>
+              <img [src]="'https://www.countryflags.io/'+ language.lang.split('_')[1]+'/flat/16.png'">
+            </span>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </span>
+
+  <span class="bottom-buttons">
+
+    <button type="submit" mat-raised-button color="primary" style="height: 45px;" translate
+            (click)="save()">save</button>
+  </span>
+</div>
+
+
+
+
