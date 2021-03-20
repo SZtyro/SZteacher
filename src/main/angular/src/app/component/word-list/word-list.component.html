@@ -7,28 +7,45 @@
         <input matInput [ngModel]="list?.name" (ngModelChange)="list.name=$event" required>
     </mat-form-field>
 
-
-    <mat-checkbox class="col-12 col-md-6 mat-form-field-wrapper p-2" [ngModel]="list?.private"
-                  (ngModelChange)="list.private=$event">private</mat-checkbox>
-
-
     <mat-form-field appearance="outline" class="col-12 col-md-6 p-2">
       <mat-label translate>language</mat-label>
-      <mat-select [ngModel]="list?.language?.id" (ngModelChange)="selectLanguage($event)" required>
-        <mat-option *ngFor="let language of languages" [value]="language.id" class="flag">
-          {{language.lang | translate}}
+      <mat-select [ngModel]="list?.language" (ngModelChange)="list.language=$event" required>
+        <mat-option *ngFor="let language of languages" [value]="language" class="flag">
+          {{language | translate}}
           <span>
-              <img [src]="'https://www.countryflags.io/'+ language.lang.split('_')[1]+'/flat/16.png'">
+              <img [src]="'https://www.countryflags.io/'+ language+'/flat/16.png'">
             </span>
         </mat-option>
       </mat-select>
     </mat-form-field>
+
+    <mat-form-field appearance="outline" class="col-12 col-md-6 p-2">
+      <mat-label translate>translation_language</mat-label>
+      <mat-select [ngModel]="list?.translationLanguage" (ngModelChange)="list.translationLanguage=$event" required>
+        <mat-option *ngFor="let language of languages" [value]="language" class="flag">
+          {{language | translate}}
+          <span>
+              <img [src]="'https://www.countryflags.io/'+ language+'/flat/16.png'">
+            </span>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <span class="col-12 col-md-6 p-2 app-checkbox">
+      <mat-checkbox [ngModel]="list?.private"
+                    (ngModelChange)="list.private=$event">{{'private_list' | translate}}</mat-checkbox>
+    </span>
+
+    <app-word-list-content *ngIf="!isMobile"></app-word-list-content>
+
   </span>
 
   <span class="bottom-buttons">
 
-    <button type="submit" mat-raised-button color="primary" style="height: 45px;" translate
-            (click)="save()">save</button>
+    <button mat-raised-button style="height: 45px;margin-bottom: 15px"
+            routerLink="words" *ngIf="isMobile" [disabled]="list.id == null">{{'words' |translate}}</button>
+    <button mat-raised-button color="primary" style="height: 45px;"
+            (click)="save()">{{'save' | translate}}</button>
   </span>
 </div>
 

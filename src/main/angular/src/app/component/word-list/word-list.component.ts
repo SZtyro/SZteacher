@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {HttpService} from "../../service/http.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-word-list',
@@ -9,18 +9,17 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class WordListComponent implements OnInit {
 
-  name: String;
-  isPrivate: boolean;
-  languageId: number;
-  languages: any[];
 
+  languages: any[];
   list;
+  isMobile: boolean = window.innerWidth < 768;
 
   constructor(
     private http: HttpService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {
-    this.list = {};
+
   }
 
   ngOnInit(): void {
@@ -28,16 +27,31 @@ export class WordListComponent implements OnInit {
       this.languages = data.languages;
       this.list = data.list;
       if (!this.list)
-        this.list = {}
+        this.list = {private: true};
     });
+
+
   }
 
-  selectLanguage($event) {
-    this.list.language = {}
-    this.list.language['id'] = $event;
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    if (window.innerWidth > 768)
+      this.isMobile = false;
+    else
+      this.isMobile = true;
   }
+
 
   save() {
-    this.http.saveWordList(this.list).subscribe()
+    this.http.saveWordList(this.list).subscribe(
+      success => {
+        this.router.navigate(['list', success['id']])
+      },
+      error => {
+        console.error(error);
+      }
+    )
   }
+
+
 }

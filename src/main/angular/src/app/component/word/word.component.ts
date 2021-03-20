@@ -16,8 +16,8 @@ export class WordComponent implements OnInit {
   word: String;
   translations: String[] = [];
   translation: String;
-  languageId;
-  translationLanguageId;
+  language;
+  translationLanguage;
   languages;
 
   constructor(
@@ -48,9 +48,9 @@ export class WordComponent implements OnInit {
   save() {
 
     let body = {
-      "languageId": this.languageId,
+      "language": this.language,
       "original": this.word,
-      "translationLanguageId": this.translationLanguageId,
+      "translationLanguage": this.translationLanguage,
       "translation": this.translations
     }
 
@@ -58,8 +58,10 @@ export class WordComponent implements OnInit {
     this.http.saveWord(body).subscribe(
       () => {
         this.word = null;
-        this.languageId = null;
-        this.translationLanguageId = null;
+        this.language = null;
+        this.translationLanguage = null;
+        this.translations = [];
+        this.words = [];
       },
       err => {
       }
@@ -68,8 +70,8 @@ export class WordComponent implements OnInit {
 
   setWord(word) {
 
-    this.languageId = word['language'].id;
-    this.translationLanguageId = word['translationLanguage'].id;
+    this.language = word['language'];
+    this.translationLanguage = word['translationLanguage'];
     this.word = word['original'];
     this.translations = word['translation'].split(",")
   }

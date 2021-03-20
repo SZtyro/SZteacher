@@ -14,3 +14,10 @@ body {
   display: flex;
   justify-content: space-between
 }
+
+.bottom-buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  margin-bottom: 15px;
+}

@@ -1,0 +1,49 @@
+@import "~@angular/material/theming";
+@include mat-core();
+
+$md-main: (
+  50: #eee4e9,
+  100: #d5bbc8,
+  200: #ba8da3,
+  300: #9e5f7e,
+  400: #893d63,
+  500: #741b47,
+  600: #6c1840,
+  700: #611437,
+  800: #57102f,
+  900: #440820,
+  A100: #ff7aa7,
+  A200: #ff4786,
+  A400: #ff1464,
+  A700: #fa0055,
+    contrast: (
+        50: #000000,
+        100: #000000,
+        200: #000000,
+        300: #ffffff,
+        400: #ffffff,
+        500: #ffffff,
+        600: #ffffff,
+        700: #ffffff,
+        800: #ffffff,
+        900: #ffffff,
+        A100: #000000,
+        A200: #000000,
+        A400: #ffffff,
+        A700: #ffffff,
+    ),
+);
+
+$my-app-primary: mat-palette($md-main);
+$my-app-accent: mat-palette($mat-pink, 500, 900, A100);
+$my-app-warn: mat-palette($mat-deep-orange);
+$my-app-theme: mat-light-theme($my-app-primary, $my-app-accent, $my-app-warn);
+// @include angular-material-theme($my-app-theme);
+// .alternate-theme {
+//     $alternate-primary: mat-palette($mat-light-blue);
+//     $alternate-accent: mat-palette($mat-yellow, 400);
+//     $alternate-theme: mat-light-theme($alternate-primary, $alternate-accent);
+//     @include angular-material-theme($alternate-theme);
+// }
+
+@include angular-material-theme($my-app-theme);

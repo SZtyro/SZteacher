@@ -21,8 +21,15 @@ export class HttpService {
   }
 
 
-  getWords(filter) {
-    return this.http.get<any[]>(HttpService.prefix + 'word', {params: {filter: filter}});
+  getWords(filter, language?, translationLanguage?) {
+    let params = {filter: filter};
+
+    if (language)
+      params['language'] = language;
+    if (translationLanguage)
+      params['translationLanguage'] = translationLanguage;
+
+    return this.http.get<any[]>(HttpService.prefix + 'word', {params: params});
   }
 
   getLanguages() {

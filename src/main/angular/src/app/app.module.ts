@@ -16,6 +16,8 @@ import {MatIconModule} from '@angular/material/icon';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { WordListComponent } from './component/word-list/word-list.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import { WordListContentComponent } from './component/word-list/word-list-content/word-list-content.component';
+import {MatTableModule} from "@angular/material/table";
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient);
@@ -25,7 +27,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
   declarations: [
     AppComponent,
     WordComponent,
-    WordListComponent
+    WordListComponent,
+    WordListContentComponent
   ],
   imports: [
     BrowserModule,
@@ -46,6 +49,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     MatInputModule,
     MatIconModule,
     MatCheckboxModule,
+    MatTableModule
 
   ],
   providers: [],
