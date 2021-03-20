@@ -1,2 +1,13 @@
-package pl.sztyro.szteacher.service;public class AuthService {
+package pl.sztyro.szteacher.service;
+
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
+
+import java.security.Principal;
+import java.util.Map;
+
+public class AuthService {
+
+    public static Map<String, String> getPrincipalDetails(Principal principal){
+        return (Map<String, String>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
+    }
 }

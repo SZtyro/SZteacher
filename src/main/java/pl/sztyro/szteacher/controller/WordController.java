@@ -9,11 +9,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpServerErrorException;
 import pl.sztyro.szteacher.config.HibernateUtil;
+import pl.sztyro.szteacher.enums.Language;
 import pl.sztyro.szteacher.model.Word;
 import pl.sztyro.szteacher.repository.WordRepository;
-import pl.sztyro.szteacher.service.LanguageService;
+import pl.sztyro.szteacher.service.AuthService;
 import pl.sztyro.szteacher.service.WordService;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -24,9 +26,6 @@ public class WordController {
 
     @Autowired
     WordService wordService;
-
-    @Autowired
-    LanguageService languageService;
 
     @Autowired
     HibernateUtil hibernateUtil;
@@ -40,7 +39,7 @@ public class WordController {
     }
 
     @PostMapping()
-    public void addWord(@RequestBody() Object object) {
+    public void addWord(@RequestBody() Object object, Principal principal) {
 
         JSONObject jsonObject = new JSONObject(new Gson().toJson(object));
 
@@ -49,8 +48,8 @@ public class WordController {
             String list = jsonObject.getJSONArray("translation").toList().toString();
 
             Word word = wordRepository.findWordByLanguageAndOriginal(
-                    languageService.getLanguage(jsonObject.getLong("languageId")).orElseThrow(() -> new Exception("Language not found.")),
-                    languageService.getLanguage(jsonObject.getLong("translationLanguageId")).orElseThrow(() -> new Exception("Language not found.")),
+                    Language.valueOf(jsonObject.getString("language")),
+                    Language.valueOf(jsonObject.getString("translationLanguage")),
                     jsonObject.getString("original").toLowerCase()
             );
 
@@ -59,9 +58,10 @@ public class WordController {
                 wordRepository.save(word);
             } else {
                 wordService.addWord(new Word(
-                        languageService.getLanguage(jsonObject.getLong("languageId")).orElseThrow(() -> new Exception("Language not found.")),
+                        AuthService.getPrincipalDetails(principal).get("email"),
+                        Language.valueOf(jsonObject.getString("language")),
                         jsonObject.getString("original").toLowerCase(),
-                        languageService.getLanguage(jsonObject.getLong("translationLanguageId")).orElseThrow(() -> new Exception("Language not found.")),
+                        Language.valueOf(jsonObject.getString("translationLanguage")),
                         list.substring(1, list.length() - 1).toLowerCase()
                 ));
             }
@@ -77,8 +77,15 @@ public class WordController {
     }
 
     @GetMapping()
-    public List<Word> getWords(@RequestParam() String filter) {
-        return this.wordService.findAllByOriginalContains(filter);
+    public List<Word> getWords(
+            @RequestParam() String filter,
+            @RequestParam(required = false) String language,
+            @RequestParam(required = false) String translationLanguage,
+            @RequestParam(required = false) Integer limit) {
+        if (language == null && translationLanguage == null)
+            return this.wordService.findAllByOriginalContains(filter);
+        else
+            return this.wordRepository.findAllByOriginalAndLanguageAndTranslationLanguage(filter,Language.valueOf(language) , Language.valueOf(translationLanguage));
     }
 
 }

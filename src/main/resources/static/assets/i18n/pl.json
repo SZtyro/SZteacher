@@ -1,9 +1,15 @@
 {
   "word": "Słowo",
+  "words": "Słowa",
+  "name": "Nazwa",
   "language": "Język",
   "save": "Zapisz",
   "add": "Dodaj",
-  "pl_PL": "Polski",
-  "en_GB": "Angielski",
-  "translation": "Tłumaczenie"
+  "pl": "Polski",
+  "gb": "Angielski",
+  "es": "Hiszpański",
+  "de": "Niemiecki",
+  "translation": "Tłumaczenie",
+  "translation_language": "Język tłumaczenia",
+  "private_list": "Lista prywatna"
 }

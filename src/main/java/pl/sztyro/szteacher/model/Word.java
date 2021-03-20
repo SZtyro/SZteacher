@@ -1,7 +1,6 @@
 package pl.sztyro.szteacher.model;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import pl.sztyro.szteacher.service.LanguageService;
+import pl.sztyro.szteacher.enums.Language;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -14,25 +13,29 @@ public class Word {
     @GeneratedValue
     long id;
 
-    @ManyToOne(optional = false, targetEntity = Language.class)
-    @JoinColumn(name = "language_id")
+    @Enumerated(EnumType.STRING)
+    @Column(length = 3)
     Language language;
 
     @Column(nullable = false)
     String original;
 
-    @ManyToOne(optional = false, targetEntity = Language.class)
-    @JoinColumn(name = "transaltion_language_id")
+    @Enumerated(EnumType.STRING)
+    @Column(length = 3)
     Language translationLanguage;
 
     @Column(nullable = false)
     @NotBlank
     String translation;
 
+    @Column(nullable = false)
+    String author;
+
     public Word() {
     }
 
-    public Word(Language language, String original, Language translationLanguage, String translation) {
+    public Word(String author,Language language, String original, Language translationLanguage, String translation) {
+        this.author = author;
         this.language = language;
         this.original = original;
         this.translationLanguage = translationLanguage;

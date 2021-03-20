@@ -2,7 +2,6 @@ package pl.sztyro.szteacher.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.sztyro.szteacher.model.Language;
 import pl.sztyro.szteacher.model.Word;
 import pl.sztyro.szteacher.repository.WordRepository;
 

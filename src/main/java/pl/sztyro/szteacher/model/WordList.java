@@ -1,32 +1,48 @@
 package pl.sztyro.szteacher.model;
 
+import pl.sztyro.szteacher.enums.Language;
+
 import javax.persistence.*;
 
 @Entity
-public class List {
+public class WordList {
 
     @Id
     @GeneratedValue
-    long id;
+    private long id;
+
+    @Column(nullable = false)
+    private String name;
+
+    @Column(name = "owner", nullable = false)
+    private String owner;
+
+    @Column(name = "is_private")
+    private boolean isPrivate = true;
 
     @Column
-    String name;
+    private String words;
 
-//    @Column
-//    User owner;
+    @Enumerated(EnumType.STRING)
+    @Column(length = 3)
+    private Language language;
+
+    @Enumerated(EnumType.STRING)
+    @Column(length = 3)
+    private Language translationLanguage;
 
     @Column
-    boolean isPrivate = true;
+    private Double rating;
 
-    @Column
-    String words;
+    public WordList() {
+    }
 
-    @ManyToOne(optional = false, targetEntity = Language.class)
-    @JoinColumn(name = "language_id")
-    Language language;
-
-
-
+    public WordList(String name, String ownerMail, boolean isPrivate, Language language) {
+        this.name = name;
+        this.owner = ownerMail;
+        this.isPrivate = isPrivate;
+        this.language = language;
+    }
 
     public long getId() {
         return id;
@@ -62,5 +78,29 @@ public class List {
 
     public void setLanguage(Language language) {
         this.language = language;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public Double getRating() {
+        return rating;
+    }
+
+    public void setRating(Double rating) {
+        this.rating = rating;
+    }
+
+    public Language getTranslationLanguage() {
+        return translationLanguage;
+    }
+
+    public void setTranslationLanguage(Language translationLanguage) {
+        this.translationLanguage = translationLanguage;
     }
 }
