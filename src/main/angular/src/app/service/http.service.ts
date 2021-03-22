@@ -21,6 +21,11 @@ export class HttpService {
   }
 
 
+  addWordToList(body, listId) {
+    return this.http.post(HttpService.prefix + 'list/' + listId + '/word', body);
+  }
+
+
   getWords(filter, language?, translationLanguage?) {
     let params = {filter: filter};
 
@@ -37,6 +42,17 @@ export class HttpService {
   }
 
   getWordList(id) {
-    return this.http.get(HttpService.prefix + "list/" + id);
+    return this.http.get<any[]>(HttpService.prefix + "list/" + id);
   }
+
+  getWordsFromList(id) {
+    return this.http.get<any[]>(HttpService.prefix + "list/" + id + '/word');
+  }
+
+  //DELETE
+
+  deleteWordFromList(listId, wordId) {
+    return this.http.delete(HttpService.prefix + "list/" + listId + '/word/' + wordId);
+  }
+
 }

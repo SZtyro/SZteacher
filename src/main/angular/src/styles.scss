@@ -12,7 +12,7 @@ body {
 
 .flag > .mat-option-text {
   display: flex;
-  justify-content: space-between
+  justify-content: space-between;
 }
 
 .bottom-buttons {
@@ -20,4 +20,9 @@ body {
   flex-direction: column;
   justify-content: flex-end;
   margin-bottom: 15px;
+}
+
+.bottom-button {
+  height: 45px;
+  margin-bottom: 15px !important;
 }

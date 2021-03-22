@@ -31,9 +31,14 @@
       </mat-select>
     </mat-form-field>
 
+    <mat-form-field appearance="outline" class="col-12 col-md-6 p-2">
+        <mat-label translate>description</mat-label>
+      <textarea matInput [ngModel]="list?.description" (ngModelChange)="list.description=$event"></textarea>
+    </mat-form-field>
+
     <span class="col-12 col-md-6 p-2 app-checkbox">
       <mat-checkbox [ngModel]="list?.private"
-                    (ngModelChange)="list.private=$event">{{'private_list' | translate}}</mat-checkbox>
+                    (ngModelChange)="list.private=$event" color="primary">{{'private_list' | translate}}</mat-checkbox>
     </span>
 
     <app-word-list-content *ngIf="!isMobile"></app-word-list-content>
@@ -42,9 +47,9 @@
 
   <span class="bottom-buttons">
 
-    <button mat-raised-button style="height: 45px;margin-bottom: 15px"
+    <button mat-raised-button class="bottom-button"
             routerLink="words" *ngIf="isMobile" [disabled]="list.id == null">{{'words' |translate}}</button>
-    <button mat-raised-button color="primary" style="height: 45px;"
+    <button mat-raised-button color="primary" class="bottom-button"
             (click)="save()">{{'save' | translate}}</button>
   </span>
 </div>

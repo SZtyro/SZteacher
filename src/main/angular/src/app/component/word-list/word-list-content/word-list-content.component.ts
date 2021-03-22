@@ -5,6 +5,7 @@ import {SelectionModel} from "@angular/cdk/collections";
 import {Subject, timer} from "rxjs";
 import {debounce} from "rxjs/operators";
 import {HttpService} from "../../../service/http.service";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-word-list-content',
@@ -34,7 +35,8 @@ export class WordListContentComponent implements OnInit {
   words;
 
   constructor(
-    private http: HttpService
+    private http: HttpService,
+    private route: ActivatedRoute
   ) {
 
   }
@@ -46,6 +48,12 @@ export class WordListContentComponent implements OnInit {
           this.words = words;
         })
     })
+
+    this.http.getWordsFromList(this.route.snapshot.params['id']).subscribe(
+      list => {
+        this.dataSource.data = list;
+      }
+    )
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
@@ -75,10 +83,26 @@ export class WordListContentComponent implements OnInit {
   }
 
   addWord(word) {
-    this.dataSource.data.push(word)
-    this.dataSource._updateChangeSubscription();
-    this.word = "";
-    this.words = null;
+    this.http.addWordToList(word, this.route.snapshot.params['id']).subscribe(
+      success => {
+        this.dataSource.data.push(word);
+        this.dataSource._updateChangeSubscription();
+        this.word = "";
+        this.words = null;
+      }
+    )
+  }
+
+  deleteSelectedWords() {
+    this.selection.selected.forEach(elem => {
+      this.http.deleteWordFromList(this.route.snapshot.params['id'], elem.id).subscribe(
+        success => {
+          this.dataSource.data.splice(this.dataSource.data.indexOf(elem),1);
+          this.dataSource._updateChangeSubscription();
+          this.selection.clear();
+        }
+      )
+    })
   }
 
 }

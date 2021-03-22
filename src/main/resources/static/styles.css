@@ -2239,5 +2239,9 @@ body {
   justify-content: flex-end;
   margin-bottom: 15px;
 }
+.bottom-button {
+  height: 45px;
+  margin-bottom: 15px !important;
+}
 
 /*# sourceMappingURL=styles.css.map*/

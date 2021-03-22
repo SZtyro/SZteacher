@@ -1,5 +1,6 @@
 {
   "word": "Słowo",
+  "new_word": "Nowe słowo",
   "words": "Słowa",
   "name": "Nazwa",
   "language": "Język",
@@ -11,5 +12,8 @@
   "de": "Niemiecki",
   "translation": "Tłumaczenie",
   "translation_language": "Język tłumaczenia",
-  "private_list": "Lista prywatna"
+  "private_list": "Lista prywatna",
+  "description": "Opis",
+  "delete": "Usuń"
+
 }

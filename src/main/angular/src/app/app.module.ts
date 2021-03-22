@@ -18,6 +18,7 @@ import { WordListComponent } from './component/word-list/word-list.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import { WordListContentComponent } from './component/word-list/word-list-content/word-list-content.component';
 import {MatTableModule} from "@angular/material/table";
+import {MatRippleModule} from "@angular/material/core";
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient);
@@ -30,28 +31,29 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     WordListComponent,
     WordListContentComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    FormsModule,
-    MatFormFieldModule,
-    BrowserAnimationsModule,
-    MatButtonModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      }
-    }),
-    MatSelectModule,
-    MatInputModule,
-    MatIconModule,
-    MatCheckboxModule,
-    MatTableModule
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        FormsModule,
+        MatFormFieldModule,
+        BrowserAnimationsModule,
+        MatButtonModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient]
+            }
+        }),
+        MatSelectModule,
+        MatInputModule,
+        MatIconModule,
+        MatCheckboxModule,
+        MatTableModule,
+        MatRippleModule
 
-  ],
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

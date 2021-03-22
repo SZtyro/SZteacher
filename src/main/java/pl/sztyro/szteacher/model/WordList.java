@@ -1,8 +1,12 @@
 package pl.sztyro.szteacher.model;
 
 import pl.sztyro.szteacher.enums.Language;
+import pl.sztyro.szteacher.exception.DuplicateException;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Entity
 public class WordList {
@@ -16,6 +20,12 @@ public class WordList {
 
     @Column(name = "owner", nullable = false)
     private String owner;
+
+    @Column(nullable = false)
+    String author;
+
+    @Column
+    String description;
 
     @Column(name = "is_private")
     private boolean isPrivate = true;
@@ -103,4 +113,54 @@ public class WordList {
     public void setTranslationLanguage(Language translationLanguage) {
         this.translationLanguage = translationLanguage;
     }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void addWord(long id) throws DuplicateException {
+        List<String> list;
+        if (getWords() != null)
+            list = new ArrayList<String>(Arrays.asList(getWords().split(",")));
+        else
+            list = new ArrayList<>();
+
+        String newElem = String.valueOf(id).trim();
+        if (!list.contains(newElem))
+            list.add(newElem);
+        else
+            throw new DuplicateException("toast.list.word.exists");
+
+        setWords(list.toString().replaceFirst("\\[", "").replaceFirst("]", "").replace(" ", "").trim());
+    }
+
+    public List<String> extractWordsIds() {
+
+        if (getWords() != null)
+            return new ArrayList<>(Arrays.asList(getWords().split(",")));
+        else
+            return new ArrayList<>();
+    }
+
+    public void deleteWord(long id) {
+        List<String> list = extractWordsIds();
+
+        if (!list.isEmpty()) {
+            list.remove(String.valueOf(id));
+            setWords(list.toString().replaceFirst("\\[", "").replaceFirst("]", "").replace(" ", "").trim());
+        }
+    }
+
 }
