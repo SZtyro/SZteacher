@@ -20,6 +20,7 @@ import { WordListContentComponent } from './component/word-list/word-list-conten
 import {MatTableModule} from "@angular/material/table";
 import {MatRippleModule} from "@angular/material/core";
 import { ListComponent } from './component/list/list.component';
+import { ExamComponent } from './component/exam/exam.component';
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient);
@@ -31,7 +32,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     WordComponent,
     WordListComponent,
     WordListContentComponent,
-    ListComponent
+    ListComponent,
+    ExamComponent
   ],
     imports: [
         BrowserModule,

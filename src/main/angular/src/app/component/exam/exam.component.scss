@@ -1,0 +1,13 @@
+.exam-wrapper {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.answer-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%
+}

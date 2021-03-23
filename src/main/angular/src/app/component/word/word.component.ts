@@ -73,7 +73,7 @@ export class WordComponent implements OnInit {
     this.language = word['language'];
     this.translationLanguage = word['translationLanguage'];
     this.word = word['original'];
-    this.translations = word['translation'].split(",")
+    this.translations = word['translation'];
   }
 
   addTranslation() {

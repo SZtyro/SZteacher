@@ -8,11 +8,19 @@ import {WordListContentComponent} from "./component/word-list/word-list-content/
 import {ListComponent} from "./component/list/list.component";
 import {PublicListsResolverService} from "./service/resolver/list/public-lists-resolver.service";
 import {PrivateListsResolverService} from "./service/resolver/list/private-lists-resolver.service";
+import {ExamComponent} from "./component/exam/exam.component";
+import {WordsResolverService} from "./service/resolver/word/words-resolver.service";
 
 const routes: Routes = [
   {
     path: 'word', component: WordComponent, resolve: {
       languages: LanguageResolverService
+    }
+  },
+  {
+    path: 'exam/:id', component: ExamComponent, resolve: {
+      list: ListResolverService,
+      words: WordsResolverService
     }
   },
   {

@@ -45,7 +45,11 @@ public class WordController {
 
         _logger.info(jsonObject.toString(2));
         try {
-            String list = jsonObject.getJSONArray("translation").toList().toString();
+            List<Object> list = jsonObject.getJSONArray("translation").toList();
+            String[] array = list.toArray(new String[list.size()]);
+            for (int i = 0; i < array.length; i++) {
+                array[i] = array[i].toLowerCase();
+            }
 
             Word word = wordRepository.findWordByLanguageAndOriginal(
                     Language.valueOf(jsonObject.getString("language")),
@@ -54,7 +58,7 @@ public class WordController {
             );
 
             if (word != null) {
-                word.setTranslation(list.substring(1, list.length() - 1).toLowerCase());
+                word.setTranslation(array);
                 wordRepository.save(word);
             } else {
                 wordService.addWord(new Word(
@@ -62,7 +66,7 @@ public class WordController {
                         Language.valueOf(jsonObject.getString("language")),
                         jsonObject.getString("original").toLowerCase(),
                         Language.valueOf(jsonObject.getString("translationLanguage")),
-                        list.substring(1, list.length() - 1).toLowerCase()
+                        array
                 ));
             }
         } catch (Exception e) {
@@ -85,7 +89,7 @@ public class WordController {
         if (language == null && translationLanguage == null)
             return this.wordService.findAllByOriginalContains(filter);
         else
-            return this.wordRepository.findAllByOriginalAndLanguageAndTranslationLanguage(filter,Language.valueOf(language) , Language.valueOf(translationLanguage));
+            return this.wordRepository.findAllByOriginalAndLanguageAndTranslationLanguage(filter, Language.valueOf(language), Language.valueOf(translationLanguage));
     }
 
 }

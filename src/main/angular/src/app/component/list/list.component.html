@@ -28,8 +28,8 @@
 
         {{element.description}}
 
-        <button mat-button>{{'edit' | translate}}</button>
-        <button mat-button>{{'test' | translate}}</button>
+        <button mat-button [routerLink]="'/list/' + element.id">{{'edit' | translate}}</button>
+        <button mat-button [routerLink]="'/exam/' + element.id">{{'test' | translate}}</button>
 
       </div>
     </td>

@@ -1,0 +1,11 @@
+<div class="container exam-wrapper">
+  <div class="answer-wrapper">
+    <h1 style="font-size: 50px;">{{question}}</h1>
+    <mat-form-field appearance="outline">
+      <input matInput [(ngModel)]="answer" (keyup.enter)="checkAnswer($event)">
+    </mat-form-field>
+
+  </div>
+
+</div>
+

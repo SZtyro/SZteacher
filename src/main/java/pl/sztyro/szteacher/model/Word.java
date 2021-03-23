@@ -1,40 +1,48 @@
 package pl.sztyro.szteacher.model;
 
+import com.vladmihalcea.hibernate.type.array.StringArrayType;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+import org.hibernate.annotations.TypeDefs;
 import pl.sztyro.szteacher.enums.Language;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
+@TypeDefs({
+        @TypeDef(name = "string-array", typeClass = StringArrayType.class),
+})
 @Entity
 public class Word {
 
 
     @Id
     @GeneratedValue
-    long id;
+    private long id;
 
     @Enumerated(EnumType.STRING)
     @Column(length = 3)
-    Language language;
+    private Language language;
 
     @Column(nullable = false)
-    String original;
+    private String original;
 
     @Enumerated(EnumType.STRING)
     @Column(length = 3)
-    Language translationLanguage;
+    private Language translationLanguage;
 
-    @Column(nullable = false)
+    @Column(nullable = false,columnDefinition = "text[]")
     @NotBlank
-    String translation;
+    @Type(type = "string-array")
+    private String[] translation;
 
     @Column(nullable = false)
-    String author;
+    private String author;
 
     public Word() {
     }
 
-    public Word(String author,Language language, String original, Language translationLanguage, String translation) {
+    public Word(String author,Language language, String original, Language translationLanguage, String[] translation) {
         this.author = author;
         this.language = language;
         this.original = original;
@@ -66,11 +74,11 @@ public class Word {
         this.translationLanguage = translationLanguage;
     }
 
-    public String getTranslation() {
+    public String[] getTranslation() {
         return translation;
     }
 
-    public void setTranslation(String translation) {
+    public void setTranslation(String[] translation) {
         this.translation = translation;
     }
 
