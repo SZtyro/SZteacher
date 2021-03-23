@@ -11,6 +11,7 @@ export class HttpService {
   constructor(private http: HttpClient) {
   }
 
+  //POST
 
   saveWord(body) {
     return this.http.post(HttpService.prefix + 'word', body);
@@ -20,11 +21,11 @@ export class HttpService {
     return this.http.post(HttpService.prefix + 'list', body);
   }
 
-
   addWordToList(body, listId) {
     return this.http.post(HttpService.prefix + 'list/' + listId + '/word', body);
   }
 
+  //GET
 
   getWords(filter, language?, translationLanguage?) {
     let params = {filter: filter};
@@ -47,6 +48,14 @@ export class HttpService {
 
   getWordsFromList(id) {
     return this.http.get<any[]>(HttpService.prefix + "list/" + id + '/word');
+  }
+
+  getAllPublicLists(){
+    return this.http.get<any[]>(HttpService.prefix + "list/public");
+  }
+
+  getAllPrivateLists(){
+    return this.http.get<any[]>(HttpService.prefix + "list/private");
   }
 
   //DELETE

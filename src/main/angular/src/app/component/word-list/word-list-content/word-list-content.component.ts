@@ -29,7 +29,6 @@ export class WordListContentComponent implements OnInit {
   word: String;
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
   displayedColumns = ['select', 'word'];
-  expandedElement: any;
   selection = new SelectionModel<any>(true, []);
   subject = new Subject();
   words;

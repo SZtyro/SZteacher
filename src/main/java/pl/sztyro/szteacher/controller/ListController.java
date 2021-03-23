@@ -56,6 +56,11 @@ public class ListController {
         _logger.info("Saving list: " + body.getName() + ", id: " + body.getId());
         body.setOwner(details.get("given_name") + " " + details.get("family_name").charAt(0));
         body.setAuthor(details.get("email"));
+        if (body.getId() != 0) {
+            WordList list = wordListRepository.findById(body.getId()).get();
+            body.setWordsIds(list.getWordsIds());
+        }
+
         return wordListRepository.save(body);
 
     }
@@ -87,11 +92,6 @@ public class ListController {
             words.add(wordRepository.findById(Long.parseLong(wordId)).get());
         }
 
-
-//                .forEach(elem -> {
-//
-//        });
-
         return words;
 
     }
@@ -100,12 +100,12 @@ public class ListController {
     public void deleteWordFromList(@PathVariable(name = "listId") long listId, @PathVariable(name = "wordId") long wordId, Principal principal) {
         WordList list = wordListRepository.findById(listId).get();
 
-        _logger.info("Deleting word from list: " + list.getName());
+        _logger.info("Deleting word: " + wordId + " from list: " + list.getName());
 
-        if(AuthService.getPrincipalMail(principal).equals(list.getAuthor())){
+        if (AuthService.getPrincipalMail(principal).equals(list.getAuthor())) {
             list.deleteWord(wordId);
             wordListRepository.save(list);
-        }else{
+        } else {
             throw new HttpServerErrorException(HttpStatus.FORBIDDEN, "toast.list.private");
         }
     }

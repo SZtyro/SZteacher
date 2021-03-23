@@ -1,5 +1,6 @@
 package pl.sztyro.szteacher.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vladmihalcea.hibernate.type.array.StringArrayType;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
@@ -28,15 +29,17 @@ public class WordList {
     @Column(name = "owner", nullable = false)
     private String owner;
 
+    @JsonIgnore
     @Column(nullable = false)
-    String author;
+    private String author;
 
     @Column
-    String description;
+    private String description;
 
     @Column(name = "is_private")
     private boolean isPrivate = true;
 
+    @JsonIgnore
     @Type(type = "string-array")
     @Column(columnDefinition = "text[]")
     private String[] wordsIds;
@@ -149,7 +152,12 @@ public class WordList {
             list = new ArrayList<>(Arrays.asList(array));
 
 
-        list.add(String.valueOf(id));
+        String sId = String.valueOf(id);
+        if (!list.contains(sId))
+            list.add(sId);
+        else
+            throw new DuplicateException("toast.list.word.exists");
+
         setWordsIds(list.toArray(new String[list.size()]));
 
 

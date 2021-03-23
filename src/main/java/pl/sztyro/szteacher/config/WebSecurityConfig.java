@@ -45,7 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 writer.print("</body>");
                 writer.print("</html>");
                 //response.sendRedirect("/api/google/auth");
-                //response.sendRedirect("/login");
+                response.sendRedirect("/login");
 
             }
         })

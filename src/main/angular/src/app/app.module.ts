@@ -19,6 +19,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import { WordListContentComponent } from './component/word-list/word-list-content/word-list-content.component';
 import {MatTableModule} from "@angular/material/table";
 import {MatRippleModule} from "@angular/material/core";
+import { ListComponent } from './component/list/list.component';
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient);
@@ -29,7 +30,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     AppComponent,
     WordComponent,
     WordListComponent,
-    WordListContentComponent
+    WordListContentComponent,
+    ListComponent
   ],
     imports: [
         BrowserModule,
