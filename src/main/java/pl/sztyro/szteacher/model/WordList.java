@@ -1,5 +1,9 @@
 package pl.sztyro.szteacher.model;
 
+import com.vladmihalcea.hibernate.type.array.StringArrayType;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+import org.hibernate.annotations.TypeDefs;
 import pl.sztyro.szteacher.enums.Language;
 import pl.sztyro.szteacher.exception.DuplicateException;
 
@@ -8,6 +12,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@TypeDefs({
+        @TypeDef(name = "string-array", typeClass = StringArrayType.class),
+})
 @Entity
 public class WordList {
 
@@ -30,8 +37,9 @@ public class WordList {
     @Column(name = "is_private")
     private boolean isPrivate = true;
 
-    @Column
-    private String words;
+    @Type(type = "string-array")
+    @Column(columnDefinition = "text[]")
+    private String[] wordsIds;
 
     @Enumerated(EnumType.STRING)
     @Column(length = 3)
@@ -74,12 +82,12 @@ public class WordList {
         isPrivate = aPrivate;
     }
 
-    public String getWords() {
-        return words;
+    public String[] getWordsIds() {
+        return wordsIds;
     }
 
-    public void setWords(String words) {
-        this.words = words;
+    public void setWordsIds(String[] wordsIds) {
+        this.wordsIds = wordsIds;
     }
 
     public Language getLanguage() {
@@ -131,35 +139,31 @@ public class WordList {
     }
 
     public void addWord(long id) throws DuplicateException {
+
+        String[] array = getWordsIds();
         List<String> list;
-        if (getWords() != null)
-            list = new ArrayList<String>(Arrays.asList(getWords().split(",")));
-        else
+
+        if (array == null)
             list = new ArrayList<>();
-
-        String newElem = String.valueOf(id).trim();
-        if (!list.contains(newElem))
-            list.add(newElem);
         else
-            throw new DuplicateException("toast.list.word.exists");
+            list = new ArrayList<>(Arrays.asList(array));
 
-        setWords(list.toString().replaceFirst("\\[", "").replaceFirst("]", "").replace(" ", "").trim());
-    }
 
-    public List<String> extractWordsIds() {
+        list.add(String.valueOf(id));
+        setWordsIds(list.toArray(new String[list.size()]));
 
-        if (getWords() != null)
-            return new ArrayList<>(Arrays.asList(getWords().split(",")));
-        else
-            return new ArrayList<>();
+
     }
 
     public void deleteWord(long id) {
-        List<String> list = extractWordsIds();
 
-        if (!list.isEmpty()) {
+        String[] array = getWordsIds();
+        List<String> list;
+
+        if (array != null) {
+            list = new ArrayList<>(Arrays.asList(array));
             list.remove(String.valueOf(id));
-            setWords(list.toString().replaceFirst("\\[", "").replaceFirst("]", "").replace(" ", "").trim());
+            setWordsIds(list.toArray(new String[list.size()]));
         }
     }
 

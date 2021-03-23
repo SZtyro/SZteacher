@@ -83,9 +83,14 @@ public class ListController {
         }
 
         List<Word> words = new ArrayList<>();
-        list.extractWordsIds().forEach(elem -> {
-            words.add(wordRepository.findById(Long.parseLong(elem)).get());
-        });
+        for (String wordId : list.getWordsIds()) {
+            words.add(wordRepository.findById(Long.parseLong(wordId)).get());
+        }
+
+
+//                .forEach(elem -> {
+//
+//        });
 
         return words;
 
