@@ -3,11 +3,29 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  //z-index: 20;
 }
 
 .answer-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%
+  width: 100%;
+}
+
+.exam-background {
+  z-index: -10;
+  position: absolute;
+  height: 100vh;
+  width: 100%;
+  border-radius: 5px 5px 0px 0px;
+}
+
+.exam-input {
+  background-color: transparent;
+  border: solid 2px black;
+  border-radius: 8px;
+  line-height: 50px;
+  font-size: 40px;
+  text-align: center;
 }

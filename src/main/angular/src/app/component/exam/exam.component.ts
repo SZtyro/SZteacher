@@ -1,25 +1,82 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from "@angular/router";
+import { animate, keyframes, state, style, transition, trigger } from "@angular/animations";
 
 @Component({
   selector: 'app-exam',
   templateUrl: './exam.component.html',
-  styleUrls: ['./exam.component.scss']
+  styleUrls: ['./exam.component.scss'],
+  animations: [
+    trigger('examAnim', [
+      state('timerStart', style({
+        transform: 'translateY(0)',
+        backgroundColor: '#893d63',
+        color: 'white'
+      })),
+      state('timerStop', style({
+        transform: 'translateY(100%)',
+        backgroundColor: '#dfcae5',
+        color: '#212529'
+      })),
+      state('wrongAnswer', style({
+        transform: 'translateY(0)',
+        backgroundColor: '#C62828',
+        color: 'white'
+      })),
+      state('correctAnswer', style({
+        transform: 'translateY(0)',
+        backgroundColor: '#388E3C',
+        color: 'white'
+      })),
+
+      transition('timerStart => timerStop', [
+        animate('5000ms')
+      ]),
+      transition('* => timerStart', animate('200ms')),
+      transition('* => wrongAnswer', animate('100ms')),
+      transition('* => correctAnswer', animate('100ms')),
+    ]),
+
+    trigger('examAnimText', [
+      state('black', style({
+        color: 'black',
+        outline: 'black',
+        borderColor: 'black'
+      })),
+      state('white', style({
+        color: 'white',
+        outline: 'white',
+        borderColor: 'white'
+      })),
+
+
+      transition('white => black', [
+        animate('5000ms')
+      ]),
+      transition('black => white', animate('10ms'))
+    ])
+
+  ]
 })
+
 export class ExamComponent implements OnInit {
 
-
+  /**Animation state */
+  examAnimState = 'timerStart';
+  /**Words to repeat */
   failedWords: any[] = [];
-
-
+  /**Selected word to ask question */
   selectedWord;
+  /**Question displayed to user */
   question;
-  questionTimer;
-
+  /**List object */
   list;
+  /**Array of exam words */
   words: any[];
-
+  /**User input */
   answer;
+  /**Exam flag */
+  isExam: boolean = true;
 
   constructor(
     private route: ActivatedRoute
@@ -38,27 +95,15 @@ export class ExamComponent implements OnInit {
 
 
   ask() {
-    console.log("ask")
     if (this.words.length > 0) {
+      this.examAnimState = 'timerStart';
       this.answer = "";
       let randomIndex = Math.floor(Math.random() * this.words.length);
-      console.log(randomIndex);
-      console.log(this.words)
       this.selectedWord = this.words[randomIndex];
       this.question = this.selectedWord.translation[Math.floor(Math.random() * this.words[randomIndex].translation.length)];
       //Deleting selected word
       this.words.splice(this.words.indexOf(this.selectedWord), 1);
 
-      this.questionTimer = setTimeout(() => {
-        if (this.isAnswerCorrect()) {
-          this.ask()
-        } else {
-          this.failedWords.push(this.selectedWord);
-          this.question = this.selectedWord.original;
-          setTimeout(() => this.ask(), 2000)
-
-        }
-      }, 5000)
     } else {
       console.log("End of word list")
       if (this.failedWords.length > 0) {
@@ -67,26 +112,35 @@ export class ExamComponent implements OnInit {
         this.failedWords = [];
         this.ask();
       } else
-        this.question = 'end';
+        this.isExam = false;
     }
-
-
   }
 
-  isAnswerCorrect() {
-    return this.answer == this.selectedWord.original;
-  }
+  checkQuestion() {
 
-  checkAnswer($event) {
-    if (this.isAnswerCorrect()) {
-      clearTimeout(this.questionTimer);
-      this.ask()
-    } else {
-      clearTimeout(this.questionTimer);
-      this.failedWords.push(this.selectedWord);
+    if (this.answer.toLowerCase() === this.selectedWord.original) {
+      setTimeout(() => { this.ask(); }, 500);
+      this.examAnimState = 'correctAnswer';
+    }
+    else {
       this.question = this.selectedWord.original;
-      setTimeout(() => this.ask(), 2000)
-
+      this.failedWords.push(this.selectedWord);
+      setTimeout(() => { this.ask(); }, 1500);
+      this.examAnimState = 'wrongAnswer';
     }
+  }
+
+  onDone($event) {
+
+    if ($event.toState === "timerStart") {
+      this.examAnimState = "timerStop"
+    }
+
+    // if ($event.fromState === "void")
+    //   this.examAnimState = "timerStop"
+
+    if ($event.toState === "timerStop" && (this.examAnimState != 'correctAnswer' && this.examAnimState != 'wrongAnswer'))
+      this.checkQuestion();
+
   }
 }

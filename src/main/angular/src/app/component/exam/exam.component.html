@@ -1,11 +1,22 @@
-<div class="container exam-wrapper">
-  <div class="answer-wrapper">
-    <h1 style="font-size: 50px;">{{question}}</h1>
-    <mat-form-field appearance="outline">
-      <input matInput [(ngModel)]="answer" (keyup.enter)="checkAnswer($event)">
-    </mat-form-field>
+<span class="exam-background" [@examAnim]="examAnimState" (@examAnim.done)="onDone($event)"></span>
+<div *ngIf="isExam; else endOfExam" style="height: 100%;">
+
+  <div class="container exam-wrapper">
+    <div class="answer-wrapper">
+      <h1 [@examAnimText]="examAnimState == 'timerStop' ? 'black' : 'white'"
+          style="font-size: 10vw;">{{question}}</h1>
+
+      <input matInput [@examAnimText]="examAnimState == 'timerStop' ? 'black' : 'white'" [(ngModel)]="answer"
+             class="col-12 col-md-6 exam-input"
+             (keyup.enter)="checkQuestion()">
+
+
+    </div>
 
   </div>
 
 </div>
 
+<ng-template #endOfExam>
+  koniec
+</ng-template>
