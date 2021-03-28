@@ -195,7 +195,7 @@
                         <id>exec-npm-ng-build</id>
                         <phase>generate-sources</phase>
                         <configuration>
-                            <workingDirectory>${project.basedir}/src/main/angular/node</workingDirectory>
+                            <workingDirectory>${project.basedir}</workingDirectory>
                             <executable>npm</executable>
                             <arguments>
                                 <argument>run</argument>
