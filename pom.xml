@@ -154,7 +154,7 @@
                         <phase>generate-sources</phase>
                         <configuration>
                             <workingDirectory>${project.basedir}/src/main/angular</workingDirectory>
-                            <executable>npm.cmd</executable>
+                            <executable>mvn install</executable>
                             <arguments>
                                 <argument>install</argument>
                             </arguments>
