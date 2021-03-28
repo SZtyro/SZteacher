@@ -180,47 +180,8 @@
                     <nodeVersion>v14.15.3</nodeVersion>
                     <npmVersion>6.14.9</npmVersion>
                     <workingDirectory>${project.basedir}/src/main/angular</workingDirectory>
-<!--                    <installDirectory>target</installDirectory>-->
                 </configuration>
             </plugin>
-<!--            <plugin>-->
-<!--                <groupId>org.codehaus.mojo</groupId>-->
-<!--                <artifactId>exec-maven-plugin</artifactId>-->
-<!--                <version>3.0.0</version>-->
-<!--                <executions>-->
-<!--                    &lt;!&ndash;                     <execution>-->
-<!--                                            <id>exec-npm-install</id>-->
-<!--                                            <phase>generate-sources</phase>-->
-<!--                                            <configuration>-->
-<!--                                                <workingDirectory>${project.basedir}/src/main/angular</workingDirectory>-->
-<!--                                                <executable>mvn install</executable>-->
-<!--                                                <arguments>-->
-<!--                                                    <argument>install</argument>-->
-<!--                                                </arguments>-->
-<!--                                            </configuration>-->
-<!--                                            <goals>-->
-<!--                                                <goal>exec</goal>-->
-<!--                                            </goals>-->
-<!--                                        </execution> &ndash;&gt;-->
-<!--                    <execution>-->
-<!--                        <id>exec-npm-ng-build</id>-->
-<!--                        <phase>generate-sources</phase>-->
-<!--                        <configuration>-->
-<!--                            <workingDirectory>${project.basedir}/src/main/angular</workingDirectory>-->
-<!--                            <executable>npm</executable>-->
-<!--                            <arguments>-->
-<!--                                <argument>run</argument>-->
-<!--                                <argument>ng</argument>-->
-<!--                                <argument>build</argument>-->
-
-<!--                            </arguments>-->
-<!--                        </configuration>-->
-<!--                        <goals>-->
-<!--                            <goal>exec</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
         </plugins>
     </build>
 
