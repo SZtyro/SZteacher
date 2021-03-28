@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -cp target/classes:target/dependency/* pl.sztyro.szteacher.SZteacherApplication
+web: java -jar  target/szteacher-0.0.1.jar

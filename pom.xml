@@ -13,6 +13,7 @@
     <version>0.0.1</version>
     <name>SZteacher</name>
     <description>Learning service by SZtyro</description>
+    <packaging>jar</packaging>
     <properties>
         <java.version>1.8</java.version>
     </properties>
