@@ -1,1 +1,1 @@
-web: java -jar  target/szteacher-0.0.1.jar
+web: java -Dserver.port=$PORT -jar  target/szteacher-0.0.1.jar
